@@ -1,45 +1,43 @@
-import './App.css';
-import { Component } from 'react';
+import "./App.css";
+import { Component } from "react";
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
-      monsters: [
-        {
-          name: 'iqbal',
-          id: '12232',
-        },
-        {
-          name: 'ridwan',
-          id: '23421'
-        },
-        {
-          name: 'jira',
-          id: '53443'
-        },
-      ]
-
+      monsters: [],
     };
-  };
+  }
 
-  render(){
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) =>
+        this.setState(
+          () => {
+            return { monsters: users };
+          },
+          () => {
+            console.log(this.state);
+          }
+        )
+      );
+  }
+
+  render() {
     return (
       <div className="App">
-        {
-          this.state.monsters.map((monster) => {
-            return( 
+        {this.state.monsters.map((monster) => {
+          return (
             <div key={monster.id}>
               <h1>{monster.name}</h1>
             </div>
-            )
-          })
-        }
+          );
+        })}
       </div>
     );
   }
-
 }
 
 export default App;
